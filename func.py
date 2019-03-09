@@ -39,7 +39,6 @@ def get_match_recorde(soup):
 
 def get_game_recorde(soup):
   table = []
-  
   match = soup.find(class_="cell-game")
   home_point = 0
   away_point = 0

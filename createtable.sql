@@ -9,7 +9,7 @@ home_point INT ,
 away_point INT ,
 visitors INT ,
 sex INT ,
-PRIMARY KEY(match_id,date,home)
+PRIMARY KEY(match_id)
 );
 
 CREATE TABLE game (
@@ -21,7 +21,7 @@ away_player1 VARCHAR(100) ,
 away_player2 VARCHAR(100) ,
 home_point INT ,
 away_point INT ,
-PRIMARY KEY(match_id,game_id,home_player1)
+PRIMARY KEY(match_id,game_id)
 );
 
 CREATE TABLE point (
