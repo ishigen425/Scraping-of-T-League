@@ -33,7 +33,7 @@ def get_match_recorde(soup):
   itemclass = match.find(class_="item-spec").find_all("li")
   visitors = itemclass[2].get_text()
   visitors = re.sub(r"[^0-9]", "", visitors)
-  
+
   return [home, away,home_point, away_point, visitors]
 
 
