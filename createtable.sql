@@ -35,3 +35,15 @@ home_timeout_fag INT ,
 away_timeout_fag INT ,
 PRIMARY KEY(match_id,game_id,set_id,point_id)
 );
+
+CREATE TABLE player (
+player_name VARCHAR(50) ,
+team_name VARCHAR(50) ,
+type VARCHAR(50) ,
+birthday DATE ,
+height INT ,
+birthplace VARCHAR(50) ,
+latest_world_rank INT ,
+highest_world_rank INT ,
+PRIMARY KEY(player_name)
+);
