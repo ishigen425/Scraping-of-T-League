@@ -3,13 +3,14 @@ from bs4 import BeautifulSoup
 import re
 import mysql.connector
 from game_data_func import get_game_recorde,get_link,get_match_recorde,get_point_record
+import config as conf
 
 conn = mysql.connector.connect(
-    host = '172.17.0.3',#localhost
-    port = 3306,
-    user = '',
-    password = '',
-    database = 'TLeagu',
+    host = conf.host,
+    port = conf.port,
+    user = conf.user,
+    password = conf.password,
+    database = conf.database
 )
 
 cur = conn.cursor()

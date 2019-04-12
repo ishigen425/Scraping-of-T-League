@@ -3,13 +3,14 @@ from bs4 import BeautifulSoup
 import re
 import mysql.connector
 from player_data_func import get_team_link, get_player_data, get_player_link
+import config as conf
 
 conn = mysql.connector.connect(
-    host = '172.17.0.4',#localhost
-    port = 3306,
-    user = '',
-    password = '',
-    database = 'TLeagu',
+    host = conf.host,
+    port = conf.port,
+    user = conf.user,
+    password = conf.password,
+    database = conf.database
 )
 
 cur = conn.cursor()
@@ -20,7 +21,8 @@ try:
     cur.execute("DELETE FROM player;")
     for i in link:
         url = basicurl + i + "player/"
-        player_list_url = get_player_link(url)
+        tmp = "?season=2018"
+        player_list_url = get_player_link(url + tmp)
         for player_index, player_url in enumerate(player_list_url):
             player_url = url + player_url 
             player_data = get_player_data(player_url)
