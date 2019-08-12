@@ -37,6 +37,7 @@ PRIMARY KEY(match_id,game_id,set_id,point_id)
 );
 
 CREATE TABLE player (
+season VARCHAR(50) ,
 player_name VARCHAR(50) ,
 team_name VARCHAR(50) ,
 type VARCHAR(50) ,
@@ -45,5 +46,5 @@ height INT ,
 birthplace VARCHAR(50) ,
 latest_world_rank INT ,
 highest_world_rank INT ,
-PRIMARY KEY(player_name)
+PRIMARY KEY(season,player_name)
 );

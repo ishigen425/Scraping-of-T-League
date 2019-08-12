@@ -21,14 +21,14 @@ try:
     cur.execute("DELETE FROM player;")
     for i in link:
         url = basicurl + i + "player/"
-        tmp = "?season=2018"
-        player_list_url = get_player_link(url + tmp)
+        season = "?season=2018"
+        player_list_url = get_player_link(url + season)
         for player_index, player_url in enumerate(player_list_url):
             player_url = url + player_url 
             player_data = get_player_data(player_url)
-            execute_str = "INSERT INTO player VALUES ('{}','{}','{}',{},{},'{}',{},{});".format(
-                player_data[0].strip(), i[6:-1], player_data[1].strip(), player_data[2], player_data[3], 
-                player_data[4].strip(), player_data[5] or 'NULL', player_data[6] or 'NULL'
+            execute_str = "INSERT INTO player VALUES ('{}','{}','{}','{}',{},{},'{}',{},{});".format(
+                season[len(season)-4:],player_data[0].strip(), i[6:-1], player_data[1].strip(), player_data[2], 
+                player_data[3], player_data[4].strip(), player_data[5] or 'NULL', player_data[6] or 'NULL'
             )
             cur.execute(execute_str)
 except:

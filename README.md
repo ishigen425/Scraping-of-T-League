@@ -1,2 +1,2 @@
 # TLeagu
-TLeagu result scraping
+Scraping of TLeagu result 
