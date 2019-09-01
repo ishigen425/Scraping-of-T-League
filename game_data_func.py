@@ -4,10 +4,10 @@ import re
 
 basicurl = "https://tleague.jp/match/"
 
-def get_link():
+def get_link(season, months):
   link_list = []
-  for month in ["201810","201811","201812","201901","201902"]:
-    url = basicurl + "?season=2018&month=" + month + "&mw="
+  for month in months:
+    url = basicurl + "?season=" + season + "&month=" + season + month + "&mw="
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
     matchlist = soup.find(class_="ui-match-table")
