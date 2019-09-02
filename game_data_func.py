@@ -7,7 +7,7 @@ basicurl = "https://tleague.jp/match/"
 def get_link(season, months):
   link_list = []
   for month in months:
-    url = basicurl + "?season=" + season + "&month=" + season + month + "&mw="
+    url = basicurl + "?season=" + season + "&month=" + month + "&mw="
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
     matchlist = soup.find(class_="ui-match-table")
@@ -94,12 +94,17 @@ def get_point_record(soup):
     game = []
     game_serve = []
     game_timeout = []
-    for w in i.find_all(class_="wrap-table"):
-      point = []
-      serve = []
-      timeout = []
+    for w_ind, w in enumerate(i.find_all(class_="wrap-table")):
+      is_away, is_away_cnt = False, 0
+      point, serve, timeout = [], [], []
       tmp = ""
       for k_ind,k in enumerate(w.find_all("td")):
+        if is_away:
+          if k.get_text() == "T":
+            game_timeout[w_ind][is_away_cnt-max(max(game_timeout[w_ind]))][1] = 1
+          is_away_cnt += 1
+          continue
+        
         if k_ind == 0:
           if k.get_text() == "1" or k.get_text() == "0":
             point.append(k.get_text())
@@ -111,7 +116,7 @@ def get_point_record(soup):
               home_timeout = 1
               continue
           elif re.match("[0-9]", k.get_text()) == None:
-              away_timeout = 1
+              # away_timeout = 1
               continue
           elif tmp == k.get_text():
             point.append("0")
@@ -130,7 +135,9 @@ def get_point_record(soup):
           game.append(point)
           game_serve.append(serve)
           game_timeout.append(timeout)
-          break
+          is_away = True
+          # break
+    
     match.append(game)
     match_timeout.append(game_timeout)
     match_serve.append(game_serve)

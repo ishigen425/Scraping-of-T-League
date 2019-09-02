@@ -6,10 +6,10 @@ from game_data_func import get_game_recorde,get_link,get_match_recorde,get_point
 import csv
 
 basicurl = "https://tleague.jp"
-SEASON_2018_2019 = ["10","11","12","01","02"]
+SEASON_2018_2019 = ["201810","201811","201812","201901","201902", "201903"]
 SEASON_2019_2020 = ["08"]
-season = "2019"
-link = get_link(season, SEASON_2019_2020)
+season = "2018"
+link = get_link(season, SEASON_2018_2019)
 match_table = []
 game_table = []
 point_table = []
@@ -23,16 +23,15 @@ try:
         sex = 0 if i[-3] == "m" else 1
         date = i[-11:-3]
         match_id = i[7:]
-        all_match = get_match_recorde(soup)
-        all_match_game = get_game_recorde(soup)
-        all_match_point, all_match_timeout, all_match_serve = get_point_record(soup)
         
-        # inesrt match table
+        #match table
+        all_match = get_match_recorde(soup)
         match_table.append([
             match_id, date, all_match[0], all_match[1], int(all_match[2]), int(all_match[3]), int(all_match[4]), int(sex)
         ])
 
-        # insert game table
+        #game table
+        all_match_game = get_game_recorde(soup)
         for a_game_index, a_game in enumerate(all_match_game):
             if a_game[1] != None:
                 game_table.append([
@@ -43,7 +42,8 @@ try:
                     match_id, a_game_index, a_game[0], None, a_game[2], None, int(a_game[4]), int(a_game[5])
                 ])
 
-        # insert point table
+        #point table
+        all_match_point, all_match_timeout, all_match_serve = get_point_record(soup)
         for a_match_point_index, a_match_point in enumerate(all_match_point):
             for a_set_point_index, a_set_point in enumerate(a_match_point):
                 for a_point_index, a_point in enumerate(a_set_point):
@@ -61,17 +61,17 @@ finally:
     point_header = ["match_id", "game_id", "set_id", "point_id", "point", "serve", "home_timeout_flg", "away_timeout_flg"]
 
     # export csv
-    with open('./data/match_table.csv', 'w', encoding='utf-8') as f:
+    with open('./data/match_table_{}.csv'.format(season), 'w', encoding='utf-8') as f:
         writer = csv.writer(f, lineterminator='\n')
         writer.writerow(match_header)
         writer.writerows(match_table)
 
-    with open('./data/game_table.csv', 'w', encoding='utf-8') as f:
+    with open('./data/game_table_{}.csv'.format(season), 'w', encoding='utf-8') as f:
         writer = csv.writer(f, lineterminator='\n')
         writer.writerow(game_header)
         writer.writerows(game_table)
 
-    with open('./data/point_table.csv' ,'w', encoding='utf-8') as f:
+    with open('./data/point_table_{}.csv'.format(season) ,'w', encoding='utf-8') as f:
         writer = csv.writer(f, lineterminator='\n')
         writer.writerow(point_header)
         writer.writerows(point_table)
