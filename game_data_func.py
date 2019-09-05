@@ -2,12 +2,12 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
-basicurl = "https://tleague.jp/match/"
+BASIC_URL = "https://tleague.jp/match/"
 
 def get_link(season, months):
   link_list = []
   for month in months:
-    url = basicurl + "?season=" + season + "&month=" + month + "&mw="
+    url = BASIC_URL + "?season=" + season + "&month=" + month + "&mw="
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
     matchlist = soup.find(class_="ui-match-table")
@@ -67,11 +67,9 @@ def get_game_recorde(soup):
   return table
 
 def judge_end_set(point, is_final):
-  home = 0
-  away = 0
+  home, away = 0, 0
   if is_final:
-    home = 6
-    away = 6
+    home, away = 6, 6
   for i in point:
     if i == "1":
       home += 1
@@ -85,15 +83,11 @@ def judge_end_set(point, is_final):
   return False
 
 def get_point_record(soup):
-  match = []
-  match_serve = []
-  match_timeout = []
+  match, match_serve, match_timeout = [], [], []
   home_timeout, away_timeout = 0, 0
   is_final = False
   for i in soup.find_all("div",class_="match-game"):
-    game = []
-    game_serve = []
-    game_timeout = []
+    game, game_serve, game_timeout = [], [], []
     for w_ind, w in enumerate(i.find_all(class_="wrap-table")):
       is_away, is_away_cnt = False, 0
       point, serve, timeout = [], [], []
@@ -102,6 +96,7 @@ def get_point_record(soup):
         if is_away:
           if k.get_text() == "T":
             game_timeout[w_ind][is_away_cnt-max(max(game_timeout[w_ind]))][1] = 1
+            break
           is_away_cnt += 1
           continue
         
