@@ -41,26 +41,26 @@ def main(season):
 
             #game table
             all_match_game = get_game_recorde(soup)
-            for a_game_index, a_game in enumerate(all_match_game):
-                if a_game[1] != None:
+            for game_index, game in enumerate(all_match_game):
+                if game[1] != None:
                     game_table.append([
-                        match_id, a_game_index, a_game[0], a_game[1], a_game[2], a_game[3], int(a_game[4]), int(a_game[5])
+                        match_id, game_index, game[0], game[1], game[2], game[3], int(game[4]), int(game[5])
                     ])
                 else:
                     game_table.append([
-                        match_id, a_game_index, a_game[0], None, a_game[2], None, int(a_game[4]), int(a_game[5])
+                        match_id, game_index, game[0], None, game[2], None, int(game[4]), int(game[5])
                     ])
 
             #point table
             all_match_point, all_match_timeout, all_match_serve = get_point_record(soup)
-            for a_match_point_index, a_match_point in enumerate(all_match_point):
-                for a_set_point_index, a_set_point in enumerate(a_match_point):
-                    for a_point_index, a_point in enumerate(a_set_point):
+            for match_point_index, match_point in enumerate(all_match_point):
+                for set_point_index, set_point in enumerate(match_point):
+                    for point_index, point in enumerate(set_point):
                         point_table.append([
-                            match_id, a_match_point_index, a_set_point_index, a_point_index,
-                            int(a_point), int(all_match_serve[a_match_point_index][a_set_point_index][a_point_index]),
-                            all_match_timeout[a_match_point_index][a_set_point_index][a_point_index][0],
-                            all_match_timeout[a_match_point_index][a_set_point_index][a_point_index][1]
+                            match_id, match_point_index, set_point_index, point_index,
+                            int(point), int(all_match_serve[match_point_index][set_point_index][point_index]),
+                            all_match_timeout[match_point_index][set_point_index][point_index][0],
+                            all_match_timeout[match_point_index][set_point_index][point_index][1]
                         ])
     except:
         print("Error", sys.exc_info()[0])
