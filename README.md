@@ -1,4 +1,4 @@
-# Scraping of TLeague game results
+# Scraping of TLeague
 
 試合データのcsvファイルの出力は以下のコマンドです。第一引数でシーズンを表す引数として、"2018"もしくは"2019"を入力してください。
 ```
