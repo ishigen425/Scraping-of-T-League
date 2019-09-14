@@ -11,7 +11,7 @@ def main():
     player_table = []
     try:
         for i in link:
-            url = basicurl + i + "player/"
+            url = BASIC_URL + i + "player/"
             season = "?season=" + SEASON
             player_list_url = get_player_link(url + season)
             for player_index, player_url in enumerate(player_list_url):

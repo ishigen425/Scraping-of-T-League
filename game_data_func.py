@@ -84,58 +84,56 @@ def judge_end_set(point, is_final):
 
 def get_point_record(soup):
   match, match_serve, match_timeout = [], [], []
-  home_timeout, away_timeout = 0, 0
-  is_final = False
   for i in soup.find_all("div",class_="match-game"):
-    game, game_serve, game_timeout = [], [], []
-    for w_ind, w in enumerate(i.find_all(class_="wrap-table")):
-      is_away, is_away_cnt = False, 0
+    game, game_timeout, game_serve = [], [], []
+    for w_idx, w in enumerate(i.find_all(class_="wrap-table")):
       point, serve, timeout = [], [], []
-      tmp = ""
-      for k_ind,k in enumerate(w.find_all("td")):
-        if is_away:
-          if k.get_text() == "T":
-            game_timeout[w_ind][is_away_cnt-max(max(game_timeout[w_ind]))][1] = 1
-            break
-          is_away_cnt += 1
+      for k_idx,k in enumerate(w.find_all("td")):
+        txt = k.get_text()
+        class_list = k.get("class")
+        if txt == '':
           continue
-        
-        if k_ind == 0:
-          if k.get_text() == "1" or k.get_text() == "0":
-            point.append(k.get_text())
-          else:
-            point.append(str(int(k.get_text()) - 6))
-            is_final = True
-        else:
-          if k.get_text() == "T":
-              home_timeout = 1
-              continue
-          elif re.match("[0-9]", k.get_text()) == None:
-              # away_timeout = 1
-              continue
-          elif tmp == k.get_text():
-            point.append("0")
-          else:
-            point.append("1")
-        timeout.append([home_timeout, away_timeout])
-        home_timeout, away_timeout = 0, 0
-        tmp = k.get_text()
-        if k.get("class") != None:
+        if class_list != None and "timeout" in class_list:
+          timeout.append(1)
+          continue
+        if class_list != None and "serve" in class_list:
           serve.append(1)
         else:
           serve.append(2)
+        point.append(txt)
+        timeout.append(0)
+      # game
+      game_serve.append(serve[:len(serve)])
+      game_tmp, game_timeout_tmp = convGameArray(point, timeout)
+      game.append(game_tmp)
+      game_timeout.append(game_timeout_tmp)
 
-        if judge_end_set(point, is_final):
-          is_final = False
-          game.append(point)
-          game_serve.append(serve)
-          game_timeout.append(timeout)
-          is_away = True
-          # break
-    
     match.append(game)
     match_timeout.append(game_timeout)
     match_serve.append(game_serve)
 
   return match, match_timeout, match_serve
 
+def convGameArray(point, timeout):
+  num_point = []
+  for i, v in enumerate(point):
+    if re.match("[0-9]", v):
+      num_point.append(v)
+  rally_cnt = len(num_point)//2
+  ret_timeout = [0] * rally_cnt
+  
+  cnt = 0
+  for i, v in enumerate(timeout):
+    if v > 0:
+      if i <= rally_cnt + cnt:
+        ret_timeout[i] = 1
+      else:
+        ret_timeout[i-rally_cnt-cnt] = 2
+      cnt += 1
+
+  ret = []
+  home = num_point[:rally_cnt]
+  away = num_point[rally_cnt:]
+  for i in range(rally_cnt):
+    ret.append(home[i] + " " + away[i])
+  return ret, ret_timeout
