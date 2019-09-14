@@ -1,21 +1,20 @@
 # TLeagu
 
-試合データのcsvファイルの出力は以下のコマンドです。
-第一引数でシーズンを表す引数として、"2018"もしくは"2019"を入力してください。
-
+試合データのcsvファイルの出力は以下のコマンドです。第一引数でシーズンを表す引数として、"2018"もしくは"2019"を入力してください。
+```
 Tleagu_game.py 2018
-
+```
 選手データのcsvファイルの出力は以下のコマンドです。
 こちらは2019年に登録されている選手のみとなります。
-
+```
 Tleagu_player.py
-
+```
 個人スタッツはまだ取得できません。対応する予定です。
 
 それぞれのcsvファイルの説明をします。
 
-Tleagu_game.pyから出力されるファイル  
-ファイル名:match_table_{シーズン}.csv  
+## Tleagu_game.pyから出力されるファイル
+* match_table_{シーズン}.csv  
 文字コード:utf-8  
 カラム  
 match_id:チームマッチのID URLの後方文字列  
@@ -27,7 +26,7 @@ away_point:アウェーチームの勝利ゲーム数
 visitors:観客数  
 sex:性別  
 
-ファイル名:game_table_{シーズン}.csv  
+* game_table_{シーズン}.csv  
 文字コード:utf-8  
 match_id:チームマッチのID  
 game_id:各マッチのインデックス番号  
@@ -38,7 +37,7 @@ away_player2:アウェーチームの選手名（シングルスの場合は未�
 home_point:ホームチームの獲得ゲーム数  
 away_point:アウェーチームの獲得ゲーム数  
 
-ファイル名:point_table_{シーズン}.csv  
+* point_table_{シーズン}.csv  
 文字コード:utf-8  
 match_id:チームマッチのID  
 game_id:各マッチのインデックス番号  
@@ -49,8 +48,9 @@ away_point:アウェーチームの獲得ポイント
 serve:サーブ権 1:ホームチーム、2:アウェーチーム  
 timeout:タイムアウト 1:ホームチームのタイムアウト直後のポイント 2:アウェーチームのタイムアウト直後のポイント  
 
-Tleagu_player.pyから出力されるファイル  
-ファイル名:player_table.csv  
+
+## Tleagu_player.pyから出力されるファイル
+* player_table.csv  
 文字コード:utf-8  
 カラム  
 season:選手登録されているシーズン  
