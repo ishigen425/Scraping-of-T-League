@@ -102,6 +102,7 @@ def export_csv(match_table, game_table, point_table):
 
 if __name__ == '__main__':
     parser()
-    season = sys.argv[0]
+    season = sys.argv[1]
     # season = "2019"
+    print("season", season)
     main(season)
