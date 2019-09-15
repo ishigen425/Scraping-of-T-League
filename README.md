@@ -1,5 +1,14 @@
 # Scraping of TLeague
 
+## 動作環境
+python 3.6  
+各ライブラリは以下のコマンドを実行
+```
+pip install -r requirements.txt
+```
+
+## 利用方法
+
 試合データのcsvファイルの出力は以下のコマンドです。第一引数でシーズンを表す引数として、"2018"もしくは"2019"を入力してください。
 ```
 Tleagu_game.py 2018
