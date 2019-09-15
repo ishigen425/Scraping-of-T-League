@@ -38,11 +38,9 @@ def get_player_data(player_url):
     player_data_list = []
     response = requests.get(player_url)
     soup = BeautifulSoup(response.text, "html.parser")
-    name = soup.find(class_="bg-1st")
-    name.find("em").extract()
-    name.find("span").extract()
-    name.find("a").extract()
-    player_data_list.append(name.get_text().replace("\n",""))
+    name = soup.find(class_="ttl-heavy")
+    name = name.find("span")
+    player_data_list.append(name.get_text().strip())
     matchlist = soup.find(class_="profile-player")
     for index, li in enumerate(matchlist.find_all("li")):
         if index in [2,3,4,5,8,9]:
