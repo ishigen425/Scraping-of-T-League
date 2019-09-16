@@ -3,6 +3,17 @@ from bs4 import BeautifulSoup
 import re
 import json
 
+CONV_TEAM_NAME_JPN_TO_ENG = {"T.T彩たま":"tt-saitama",
+                    "木下マイスター東京":'kinoshitameister-tokyo',
+                    "岡山リベッツ":'okayama-rivets',
+                    "琉球アスティーダ":'ryukyu-asteeda',
+                    "トップおとめピンポンズ名古屋":"top-nagoya",
+                    "日本生命レッドエルフ":"nissay-redelf",
+                    "日本ペイントマレッツ":"nipponpaint-mallets",
+                    "木下アビエル神奈川":"kinoshitaabyell-kanagawa"
+                    }
+
+
 def get_player_link(season):
     player_list_url = []
     for sex in ("m", "w"):
@@ -59,7 +70,7 @@ def get_name(soup):
 def get_team(soup):
     spec_stats = soup.find(class_="spec-stats")
     btag = spec_stats.find("b")
-    return btag.get_text()
+    return CONV_TEAM_NAME_JPN_TO_ENG[btag.get_text()]
 
 def get_cahtsjs_labels_text(script):
     script = re.sub("\s","", script)
