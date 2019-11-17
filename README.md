@@ -11,16 +11,16 @@ pip install -r requirements.txt
 
 試合データのcsvファイルの出力は以下のコマンドです。第一引数でシーズンを表す引数として、"2018"もしくは"2019"を入力してください。
 ```
-Tleagu_game.py 2018
+python Tleagu_game.py 2018
 ```
 選手データのcsvファイルの出力は以下のコマンドです。
 こちらは2019年に登録されている選手のみとなります。
 ```
-Tleagu_player.py
+python Tleagu_player.py
 ```
 個人スタッツの取得は以下のコマンドです。引数は"2018"もしくは"2019"です。
 ```
-Tleagu_player_stats.py 2018
+python Tleagu_player_stats.py 2018
 ```
 
 それぞれのcsvファイルの説明をします。
